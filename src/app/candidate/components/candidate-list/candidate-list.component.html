@@ -1,0 +1,115 @@
+<div class="container-fluid py-4">
+  <div class="row mb-4">
+    <div class="col">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="fw-bold text-primary">Candidates</h2>
+        <button class="btn btn-vibrant" [routerLink]="['/candidates/new']" [disabled]="isMaxApplicantsReached">
+            <i class="pi pi-plus me-2"></i>Add New Candidate
+            <span *ngIf="isMaxApplicantsReached" class="ms-2 badge bg-danger">
+              Max Applicants Reached
+            </span>
+          </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <input type="text" class="form-control" placeholder="Search candidates..." 
+                     [(ngModel)]="searchTerm" (input)="onSearch()">
+            </div>
+            <div class="col-md-3">
+              <select class="form-select" [(ngModel)]="jobPositionFilter" (change)="onFilter()">
+                <option value="">All Job Positions</option>
+                <option *ngFor="let position of jobPositions" [value]="position.id">
+                  {{ position.title }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <input type="date" class="form-control" placeholder="Application Date" 
+                     [(ngModel)]="dateFilter" (change)="onFilter()">
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-outline-secondary w-100" (click)="clearFilters()">
+                Clear Filters
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Applied For</th>
+                  <th>Application Date</th>
+                  <th>Resume</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let candidate of pagedItems">
+                  <td>{{ candidate.firstName }} {{ candidate.lastName }}</td>
+                  <td>{{ candidate.email }}</td>
+                  <td>{{ candidate.phone }}</td>
+                  <td>{{ getJobPositionInfo(candidate.jobPositionId) }}</td>
+                  <td>{{ candidate.applicationDate | date:'mediumDate' }}</td>
+                  <td>
+                    <a *ngIf="candidate.resumeUrl" [href]="candidate.resumeUrl" target="_blank" 
+                       class="btn btn-sm btn-outline-primary">
+                      <i class="pi pi-download me-1"></i>View Resume
+                    </a>
+                    <span *ngIf="!candidate.resumeUrl" class="text-muted">No resume</span>
+                  </td>
+                  <td>
+                    <div class="btn-group">
+                      <button class="btn btn-sm btn-outline-primary" (click)="openEditModal(candidate)">
+                        <i class="pi pi-pencil"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger" (click)="deleteCandidate(candidate.id)">
+                        <i class="pi pi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <div>
+              Showing {{ (currentPage - 1) * itemsPerPage + 1 }} to 
+              {{ currentPage * itemsPerPage > filteredItems.length ? filteredItems.length : currentPage * itemsPerPage }}
+              of {{ filteredItems.length }} entries
+            </div>
+            <ngb-pagination 
+              [collectionSize]="filteredItems.length" 
+              [(page)]="currentPage"
+              [pageSize]="itemsPerPage"
+              [maxSize]="5"
+              [rotate]="true"
+              [boundaryLinks]="true"
+              class="pagination-primary">
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

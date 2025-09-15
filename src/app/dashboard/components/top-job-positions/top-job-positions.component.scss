@@ -1,0 +1,85 @@
+// dashboard/components/top-job-positions/top-job-positions.component.scss
+.top-positions-list {
+  .position-item {
+    padding: 0.5rem 0;
+    
+    &:hover {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      margin: 0 -0.5rem;
+      padding: 0.5rem;
+    }
+  }
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.application-count-display {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.trend-indicator {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  
+  i {
+    font-size: 0.875rem;
+  }
+}
+
+.progress {
+  border-radius: 10px;
+  background-color: #e9ecef;
+  
+  .progress-bar {
+    border-radius: 10px;
+    transition: width 0.6s ease;
+  }
+}
+
+// Animation for list items
+.position-item {
+  animation: fadeInUp 0.5s ease-out;
+  animation-fill-mode: both;
+  
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .application-count-display {
+    font-size: 1.25rem;
+  }
+  
+  .position-item {
+    .badge {
+      font-size: 0.75rem;
+    }
+  }
+}

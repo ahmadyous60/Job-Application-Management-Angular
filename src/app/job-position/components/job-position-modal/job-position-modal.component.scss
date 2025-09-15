@@ -1,0 +1,85 @@
+@use "sass:color";
+
+:host ::ng-deep .p-dialog {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  
+  .p-dialog-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .p-dialog-content {
+    padding: 0;
+    
+    .modal-body {
+      padding: 1.5rem;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #e9ecef;
+      background-color: #f8f9fa;
+    }
+  }
+}
+
+.form-check-input:checked {
+  background-color: #4361ee;
+  border-color: #4361ee;
+}
+
+// Custom vibrant button styles
+.btn-vibrant {
+  background: linear-gradient(45deg, #4361ee, #3a0ca3);
+  border: none;
+  color: white;
+  font-weight: 500;
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(
+      45deg,
+      color.adjust(#4361ee, $lightness: -10%),
+      color.adjust(#3a0ca3, $lightness: -10%)
+    );
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  &:disabled {
+    opacity: 0.65;
+  }
+}
+
+// Character counter styling
+.form-text {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  :host ::ng-deep .p-dialog {
+    width: 95% !important;
+    margin: 1rem auto;
+    
+    .p-dialog-content {
+      .modal-body {
+        padding: 1rem;
+      }
+      
+      .modal-footer {
+        padding: 0.75rem 1rem;
+        
+        .btn {
+          padding: 0.5rem 1rem;
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+}

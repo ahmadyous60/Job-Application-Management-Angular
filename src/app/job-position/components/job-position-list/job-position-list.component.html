@@ -1,0 +1,109 @@
+<div class="container-fluid py-4">
+  <div class="row mb-4">
+    <div class="col">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="fw-bold text-primary">Job Positions</h2>
+        <button class="btn btn-vibrant" (click)="openCreateModal()">
+          <i class="pi pi-plus me-2"></i>Add New Position
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="row mb-4">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="row g-2">
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="Search job positions..."
+                     [(ngModel)]="searchTerm" (input)="onSearch()">
+            </div>
+            <div class="col-md-3">
+              <select class="form-select" [(ngModel)]="statusFilter" (change)="onFilter()">
+                <option value="">All Statuses</option>
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-outline-secondary w-100" (click)="clearFilters()">
+                Clear Filters
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Requirements</th>
+                  <th>Applicant Count</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let position of pagedItems">
+                  <td>{{ position.title }}</td>
+                  <td>{{ position.description | truncate:50 }}</td>
+                  <td>{{ position.requirements | truncate:50 }}</td>
+                  <td>
+                    <span class="badge bg-primary rounded-pill">
+                      {{ position.applicantCount }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge" [ngClass]="position.isActive ? 'bg-success' : 'bg-secondary'">
+                      {{ position.isActive ? 'Active' : 'Inactive' }}
+                    </span>
+                  </td>
+                  <td>
+                    <div class="btn-group">
+                      <button class="btn btn-sm btn-outline-primary" (click)="openEditModal(position)">
+                        <i class="pi pi-pencil"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger" (click)="deleteJobPosition(position.id)">
+                        <i class="pi pi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <div>
+              Showing {{ (currentPage - 1) * itemsPerPage + 1 }} to
+              {{ currentPage * itemsPerPage > filteredJobPositions.length ? filteredJobPositions.length : currentPage * itemsPerPage }}
+              of {{ filteredJobPositions.length }} entries
+            </div>
+            <ngb-pagination
+              [collectionSize]="filteredJobPositions.length"
+              [(page)]="currentPage"
+              [pageSize]="itemsPerPage"
+              [maxSize]="5"
+              [rotate]="true"
+              [boundaryLinks]="true"
+              class="pagination-primary">
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

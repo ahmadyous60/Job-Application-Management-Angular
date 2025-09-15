@@ -1,0 +1,145 @@
+<div class="container-fluid py-4">
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="display-5 fw-bold text-primary">Dashboard</h1>
+      <p class="lead">Manage your job applications and candidates</p>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3 mb-3">
+      <div class="card bg-primary text-white h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-grow-1">
+              <h6 class="card-title text-white-50">Total Positions</h6>
+              <h3 class="card-text fw-bold">{{ stats.totalPositions }}</h3>
+            </div>
+            <div class="flex-shrink-0">
+              <i class="pi pi-briefcase display-6 opacity-50"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+      <div class="card bg-success text-white h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-grow-1">
+              <h6 class="card-title text-white-50">Active Positions</h6>
+              <h3 class="card-text fw-bold">{{ stats.activePositions }}</h3>
+            </div>
+            <div class="flex-shrink-0">
+              <i class="pi pi-check-circle display-6 opacity-50"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+      <div class="card bg-info text-white h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-grow-1">
+              <h6 class="card-title text-white-50">Total Candidates</h6>
+              <h3 class="card-text fw-bold">{{ stats.totalCandidates }}</h3>
+            </div>
+            <div class="flex-shrink-0">
+              <i class="pi pi-users display-6 opacity-50"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+      <div class="card bg-warning text-dark h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-grow-1">
+              <h6 class="card-title text-dark-50">Recent Applications</h6>
+              <h3 class="card-text fw-bold">{{ stats.recentApplications }}</h3>
+            </div>
+            <div class="flex-shrink-0">
+              <i class="pi pi-clock display-6 opacity-50"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Job Positions Card -->
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card h-100">
+        <div class="card-header bg-transparent border-0">
+          <h5 class="card-title mb-0">Top 5 Job Positions by Applications</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead>
+                <tr>
+                  <th>Position</th>
+                  <th>Applications</th>
+                  <th>Status</th>
+                  <th>Trend</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let position of topJobPositions">
+                  <td>
+                    <h6 class="mb-0">{{ position.title }}</h6>
+                    <small class="text-muted">{{ position.description | truncate:40 }}</small>
+                  </td>
+                  <td>
+                    <span class="badge bg-primary rounded-pill fs-6">
+                      {{ position.applicationCount }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge" [ngClass]="position.isActive ? 'bg-success' : 'bg-secondary'">
+                      {{ position.isActive ? 'Active' : 'Inactive' }}
+                    </span>
+                  </td>
+                  <td>
+                    <i class="pi" [ngClass]="{
+                      'pi-arrow-up text-success': position.trend === 'up',
+                      'pi-arrow-down text-danger': position.trend === 'down',
+                      'pi-minus text-secondary': position.trend === 'stable'
+                    }"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-header bg-transparent border-0">
+          <h5 class="card-title mb-0">Recent Activity</h5>
+        </div>
+        <div class="card-body">
+          <div class="timeline">
+            <div class="timeline-item" *ngFor="let activity of recentActivities">
+              <div class="timeline-marker bg-{{ activity.type }}"></div>
+              <div class="timeline-content">
+                <h6 class="mb-0">{{ activity.title }}</h6>
+                <p class="text-muted mb-0">{{ activity.description }}</p>
+                <small class="text-muted">{{ activity.time | date:'short' }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

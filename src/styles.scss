@@ -1,1 +1,77 @@
-/* You can add global styles to this file, and also import other style files */
+@use "sass:color";
+
+// Custom vibrant color palette
+$my-primary: #4361ee;
+$my-secondary: #7209b7;
+$my-success: #06d6a0;
+$my-info: #118ab2;
+$my-warning: #ffd166;
+$my-danger: #ef476f;
+$my-light: #f8f9fa;
+$my-dark: #212529;
+
+// ✅ Import Bootstrap SCSS correctly with variable overrides
+@use "bootstrap/scss/bootstrap" with (
+  $primary: $my-primary,
+  $secondary: $my-secondary,
+  $success: $my-success,
+  $info: $my-info,
+  $warning: $my-warning,
+  $danger: $my-danger,
+  $light: $my-light,
+  $dark: $my-dark
+);
+
+// Custom styles
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8fafc;
+}
+
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: none;
+  transition: transform 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+}
+
+.navbar {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+// Custom vibrant button variants
+.btn-vibrant {
+  background: linear-gradient(45deg, $my-primary, $my-secondary);
+  color: white;
+  border: none;
+
+  &:hover {
+    background: linear-gradient(
+      45deg,
+      color.adjust($my-primary, $lightness: -10%),
+      color.adjust($my-secondary, $lightness: -10%)
+    );
+    color: white;
+  }
+}
+
+// Custom dashboard card styles
+.dashboard-card {
+  background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+  color: white;
+  border-radius: 16px;
+  
+  h2 {
+    font-weight: 700;
+  }
+}

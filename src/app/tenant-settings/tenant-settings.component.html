@@ -1,0 +1,108 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary">Tenant Settings</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-header bg-transparent border-0">
+          <h5 class="card-title mb-0">Job Application Settings</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="settingsForm">
+            <div class="mb-3">
+              <label for="maxApplicants" class="form-label">Maximum Applicants Per Position</label>
+              <input type="number" class="form-control" id="maxApplicants" 
+                     formControlName="maxApplicantsPerPosition" min="1">
+              <div class="form-text">
+                Set the maximum number of applicants allowed for each job position. 
+                The system will prevent new applications once this limit is reached.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Allowed Resume Formats</label>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="formatPdf" 
+                       formControlName="allowPdf" value="true">
+                <label class="form-check-label" for="formatPdf">PDF (.pdf)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="formatDocx" 
+                       formControlName="allowDocx" value="true">
+                <label class="form-check-label" for="formatDocx">Word Document (.docx)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="formatJpg" 
+                       formControlName="allowJpg" value="true">
+                <label class="form-check-label" for="formatJpg">JPEG Image (.jpg)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="formatPng" 
+                       formControlName="allowPng" value="true">
+                <label class="form-check-label" for="formatPng">PNG Image (.png)</label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="autoExpireDays" class="form-label">Auto-Expire Job Positions After (Days)</label>
+              <input type="number" class="form-control" id="autoExpireDays" 
+                     formControlName="autoExpireDays" min="0">
+              <div class="form-text">
+                Set to 0 to disable auto-expiration. Job positions will be marked as inactive after this many days.
+              </div>
+            </div>
+
+            <div class="mb-3 form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="notifyLowApplications" 
+                     formControlName="notifyLowApplications">
+              <label class="form-check-label" for="notifyLowApplications">
+                Send notifications for job positions with low applications
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-vibrant" (click)="saveSettings()" 
+                    [disabled]="settingsForm.invalid || !settingsForm.dirty">
+              Save Settings
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-header bg-transparent border-0">
+          <h5 class="card-title mb-0">Application Status</h5>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-info">
+            <i class="pi pi-info-circle me-2"></i>
+            <strong>Current Maximum Applicants:</strong> {{ currentSettings.maxApplicantsPerPosition }}
+          </div>
+          
+          <div class="alert alert-warning" *ngIf="isNearLimit()">
+            <i class="pi pi-exclamation-triangle me-2"></i>
+            <strong>Warning:</strong> Some job positions are approaching the maximum applicant limit.
+          </div>
+          
+          <h6 class="mt-4">Job Positions Near Limit</h6>
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center" 
+                *ngFor="let position of positionsNearLimit">
+              {{ position.title }}
+              <span class="badge bg-warning rounded-pill">
+                {{ position.applicantCount }} / {{ currentSettings.maxApplicantsPerPosition }}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

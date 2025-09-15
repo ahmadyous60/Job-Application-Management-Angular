@@ -1,0 +1,42 @@
+{
+  "jobPositions": [],
+  "candidates": [
+    {
+      "id": "e889",
+      "firstName": "mmmma",
+      "lastName": "hjkl",
+      "email": "dfghj",
+      "phone": "rtyuio",
+      "jobPositionId": 0,
+      "applicationDate": "2025-09-14T12:31:47.858Z",
+      "resumeUrl": "Ahmad Yousaf Resume.pdf",
+      "status": "new"
+    }
+  ],
+  "tenantSettings": {
+    "maxApplicantsPerPosition": 50,
+    "allowedResumeFormats": [
+      "pdf",
+      "doc",
+      "docx"
+    ],
+    "autoExpireDays": 30,
+    "notifyLowApplications": true,
+    "lowApplicationThreshold": 3
+  },
+  "statistics": {
+    "totalJobPositions": 5,
+    "activeJobPositions": 4,
+    "totalCandidates": 12,
+    "candidatesByStatus": {
+      "new": 3,
+      "reviewed": 3,
+      "interviewed": 2,
+      "hired": 2,
+      "rejected": 2
+    },
+    "averageApplicantsPerPosition": 2.4,
+    "mostPopularPosition": "UI/UX Designer",
+    "leastPopularPosition": "Data Scientist"
+  }
+}
