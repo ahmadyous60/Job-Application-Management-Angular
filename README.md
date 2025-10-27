@@ -156,10 +156,3 @@ The build artifacts will be stored in the `dist/` directory with optimizations f
 ## 📄 License
 
 This project is private and proprietary.
-
-## 🔗 Additional Resources
-
-- [Angular Documentation](https://angular.dev)
-- [PrimeNG Components](https://primeng.org)
-- [Bootstrap Documentation](https://getbootstrap.com)
-- [Angular CLI Command Reference](https://angular.dev/tools/cli)
